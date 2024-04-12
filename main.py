@@ -68,7 +68,7 @@ def test_BMN(data_loader, model, epoch, bm_mask):
         epoch_loss += loss[0].cpu().detach().numpy()
 
     print(
-        "BMN training loss(epoch %d): tem_loss: %.03f, pem class_loss: %.03f, pem reg_loss: %.03f, total_loss: %.03f" % (
+        "BMN testing loss(epoch %d): tem_loss: %.03f, pem class_loss: %.03f, pem reg_loss: %.03f, total_loss: %.03f" % (
             epoch, epoch_tem_loss / (n_iter + 1),
             epoch_pemclr_loss / (n_iter + 1),
             epoch_pemreg_loss / (n_iter + 1),

@@ -28,6 +28,8 @@ class BMN(nn.Module):
             nn.ReLU(inplace=True)
         )
 
+        self.multihead_attn = nn.MultiheadAttention(embed_dim=self.hidden_dim_1d, num_heads=4)
+
         # Temporal Evaluation Module
         self.x_1d_s = nn.Sequential(
             nn.Conv1d(self.hidden_dim_1d, self.hidden_dim_1d, kernel_size=3, padding=1, groups=4),
@@ -64,6 +66,11 @@ class BMN(nn.Module):
 
     def forward(self, x):
         base_feature = self.x_1d_b(x)
+        base_feature = base_feature.permute(2, 0, 1)
+        # Apply Multihead Attention
+        attn_output, _ = self.multihead_attn(base_feature, base_feature, base_feature)
+        # Reshape back to (batch, channels, length)
+        base_feature = attn_output.permute(1, 2, 0)
         start = self.x_1d_s(base_feature).squeeze(1)
         end = self.x_1d_e(base_feature).squeeze(1)
         confidence_map = self.x_1d_p(base_feature)
