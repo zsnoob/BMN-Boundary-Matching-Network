@@ -90,11 +90,11 @@ def BMN_Train(opt):
 
     train_loader = torch.utils.data.DataLoader(VideoDataSet(opt, subset="train"),
                                                batch_size=opt["batch_size"], shuffle=True,
-                                               num_workers=8, pin_memory=True)
+                                               num_workers=opt["workers"], pin_memory=True)
 
     test_loader = torch.utils.data.DataLoader(VideoDataSet(opt, subset="validation"),
                                               batch_size=opt["batch_size"], shuffle=False,
-                                              num_workers=8, pin_memory=True)
+                                              num_workers=opt["workers"], pin_memory=True)
 
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=opt["step_size"], gamma=opt["step_gamma"])
     bm_mask = get_mask(opt["temporal_scale"])

@@ -40,6 +40,10 @@ def parse_opt():
 
     # Overall Dataset settings
     parser.add_argument(
+        '--workers',
+        type=int,
+        default=8)
+    parser.add_argument(
         '--video_info',
         type=str,
         default="data/activitynet_annotations/video_info_backup.csv")
