@@ -99,8 +99,8 @@ def BMN_Train(opt):
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=opt["step_size"], gamma=opt["step_gamma"])
     bm_mask = get_mask(opt["temporal_scale"])
     for epoch in range(opt["train_epochs"]):
-        scheduler.step()
         train_BMN(train_loader, model, optimizer, epoch, bm_mask)
+        scheduler.step()
         test_BMN(test_loader, model, epoch, bm_mask)
 
 
